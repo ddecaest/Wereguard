@@ -11,7 +11,7 @@ public class FontManager {
 
     public static BitmapFont NORSE_BOLD;
 
-    public static void createNorse() {
+    public static void loadFonts() {
         final FreeTypeFontGenerator norseBoldGenerator = createGenerator("Norse-Bold.otf");
         NORSE_BOLD = generate(norseBoldGenerator, 18, Color.GRAY);
     }
@@ -27,5 +27,9 @@ public class FontManager {
     private static FreeTypeFontGenerator createGenerator(String fileName) {
         final FileHandle fontFile = Gdx.files.internal(fileName);
         return new FreeTypeFontGenerator(fontFile);
+    }
+
+    public static void dispose() {
+        NORSE_BOLD.dispose();
     }
 }

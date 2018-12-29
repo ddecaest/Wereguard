@@ -1,25 +1,25 @@
 package com.octarez.wereguard.screens.splash;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.GL20;
-import com.octarez.wereguard.Application;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.octarez.wereguard.screens.BasicScreen;
+import com.octarez.wereguard.screens.ScreenManager;
 
-public class SplashScreen extends ScreenAdapter {
+public class SplashScreen extends BasicScreen {
 
     private static long SPLASH_MINIMUM_MILLIS = 2000L;
 
-    private final Application application;
+    private final ScreenManager screenManager;
 
     private boolean loadingDone;
     private long millisPassed;
 
-    public SplashScreen(Application application) {
-        this.application = application;
+    public SplashScreen(ScreenManager screenManager) {
+        this.screenManager = screenManager;
     }
 
     @Override
-    public void show() {
+    protected void initialize() {
         loadingDone = false;
         millisPassed = 0;
 
@@ -31,10 +31,7 @@ public class SplashScreen extends ScreenAdapter {
     }
 
     @Override
-    public void render(float deltaInSeconds) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+    public void render(float deltaInSeconds, SpriteBatch spriteBatch) {
         update(deltaInSeconds);
     }
 
@@ -42,7 +39,7 @@ public class SplashScreen extends ScreenAdapter {
         millisPassed += deltaInSeconds * 1000f;
 
         if(loadingDone && millisPassed > SPLASH_MINIMUM_MILLIS) {
-            application.goToMainMenu();
+            screenManager.goToMainMenu();
         }
     }
 

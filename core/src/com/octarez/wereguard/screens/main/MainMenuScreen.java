@@ -1,36 +1,35 @@
 package com.octarez.wereguard.screens.main;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.octarez.wereguard.Application;
+import com.octarez.wereguard.assets.ImageManager;
+import com.octarez.wereguard.screens.BasicScreen;
+import com.octarez.wereguard.screens.ScreenManager;
 import com.octarez.wereguard.assets.FontManager;
 
-public class MainMenuScreen extends ScreenAdapter {
+public class MainMenuScreen extends BasicScreen {
 
-    private final Application application;
+    private final ScreenManager screenManager;
 
-    public MainMenuScreen(Application application) {
-        this.application = application;
+    public MainMenuScreen(ScreenManager screenManager) {
+        this.screenManager = screenManager;
     }
 
     @Override
-    public void show() {
-
+    protected void initialize() {
+        ImageManager.aspectRatios.setPosition(0,0);
+        ImageManager.aspectRatios.setSize(VIRTUAL_WIDTH,VIRTUAL_HEIGHT);
     }
 
     @Override
-    public void render(float delta) {
-        final SpriteBatch spriteBatch = application.spriteBatch;
+    public void render(float deltaInSeconds, SpriteBatch spriteBatch) {
+        FontManager.NORSE_BOLD.draw(spriteBatch,
+                "FPS:" + Gdx.graphics.getFramesPerSecond(),
+                VIRTUAL_WIDTH / 2f,
+                VIRTUAL_HEIGHT / 2f
+        );
 
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        spriteBatch.begin();
-        FontManager.NORSE_BOLD.draw(spriteBatch, "FPS:" + Gdx.graphics.getFramesPerSecond(), application.virtualWidth/2, application.virtualHeight/2);
-        spriteBatch.end();
+//        ImageManager.aspectRatios.draw(spriteBatch);
     }
 
     @Override

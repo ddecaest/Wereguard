@@ -1,8 +1,9 @@
 package com.octarez.wereguard.desktop;
 
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.octarez.wereguard.Application;
+import com.octarez.wereguard.screens.ScreenManagerImpl;
 
 public class DesktopLauncher {
 
@@ -10,8 +11,8 @@ public class DesktopLauncher {
         new LwjglApplication(createApplicationListener(), createConfiguration());
     }
 
-    private static Application createApplicationListener() {
-        return new Application();
+    private static ApplicationListener createApplicationListener() {
+        return new ScreenManagerImpl();
     }
 
     private static LwjglApplicationConfiguration createConfiguration() {
