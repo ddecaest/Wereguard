@@ -6,20 +6,31 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.octarez.wereguard.rendering.SpriteBatchUtil;
+import com.octarez.wereguard.WereguardCore;
+import com.octarez.wereguard.assets.CustomizedAssetManager;
 
 public abstract class BasicScreen implements Screen {
 
-    public static final int VIRTUAL_WIDTH = 1600;
-    public static final int VIRTUAL_HEIGHT = 900;
+    protected static final int VIRTUAL_WIDTH = 1600;
+    protected static final int VIRTUAL_HEIGHT = 900;
 
+    protected CustomizedAssetManager assetManager;
+    protected ShapeRenderer shapeRenderer;
+    protected ScreenManager screenManager;
+    protected SpriteBatch spriteBatch;
     protected Viewport viewport;
     protected Camera camera;
 
     @Override
     public void show() {
+        shapeRenderer = WereguardCore.RENDER_UTIL.shapeRenderer;
+        spriteBatch = WereguardCore.RENDER_UTIL.spriteBatch;
+        screenManager = WereguardCore.SCREEN_MANAGER;
+        assetManager = WereguardCore.ASSET_MANAGER;
+
         camera = new OrthographicCamera();
         viewport = new FitViewport(VIRTUAL_WIDTH,VIRTUAL_HEIGHT, camera);
         viewport.apply();
@@ -36,13 +47,17 @@ public abstract class BasicScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        SpriteBatchUtil.spriteBatch.setProjectionMatrix(camera.combined);
-        SpriteBatchUtil.spriteBatch.begin();
-        render(delta, SpriteBatchUtil.spriteBatch);
-        SpriteBatchUtil.spriteBatch.end();
+        spriteBatch.setProjectionMatrix(camera.combined);
+        spriteBatch.begin();
+        render(delta, spriteBatch);
+        spriteBatch.end();
+
+        update(delta);
     }
 
-    public abstract void render(float deltaInSeconds, SpriteBatch spriteBatch);
+    protected abstract void render(float deltaInSeconds, SpriteBatch spriteBatch);
+
+    protected abstract void update(float deltaInSeconds);
 
     @Override
     public void resize(int width, int height) {
@@ -62,6 +77,11 @@ public abstract class BasicScreen implements Screen {
 
     @Override
     public void hide() {
+
+    }
+
+    @Override
+    public void dispose() {
 
     }
 }

@@ -1,35 +1,39 @@
 package com.octarez.wereguard.screens.main;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.octarez.wereguard.assets.ImageManager;
+import com.octarez.wereguard.assets.FontCache;
+import com.octarez.wereguard.rendering.CenteredText;
 import com.octarez.wereguard.screens.BasicScreen;
-import com.octarez.wereguard.screens.ScreenManager;
-import com.octarez.wereguard.assets.FontManager;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class MainMenuScreen extends BasicScreen {
 
-    private final ScreenManager screenManager;
-
-    public MainMenuScreen(ScreenManager screenManager) {
-        this.screenManager = screenManager;
-    }
+    private List<CenteredText> menuOptions;
 
     @Override
     protected void initialize() {
-        ImageManager.aspectRatios.setPosition(0,0);
-        ImageManager.aspectRatios.setSize(VIRTUAL_WIDTH,VIRTUAL_HEIGHT);
+        final CenteredText play = new CenteredText(FontCache.getNorseBold(assetManager), VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT * 3/4, "1. Play");
+        final CenteredText exit = new CenteredText(FontCache.getNorseBold(assetManager), VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT * 2/4, "2. Exit");
+        menuOptions = Arrays.asList(play, exit);
     }
 
     @Override
-    public void render(float deltaInSeconds, SpriteBatch spriteBatch) {
-        FontManager.NORSE_BOLD.draw(spriteBatch,
-                "FPS:" + Gdx.graphics.getFramesPerSecond(),
-                VIRTUAL_WIDTH / 2f,
-                VIRTUAL_HEIGHT / 2f
-        );
+    public void render(float deltaInSeconds, final SpriteBatch spriteBatch) {
+        menuOptions.forEach(menuOption -> menuOption.draw(spriteBatch));
+    }
 
-//        ImageManager.aspectRatios.draw(spriteBatch);
+    @Override
+    protected void update(float deltaInSeconds) {
+        if(Gdx.input.isKeyPressed(Input.Keys.NUM_1)) {
+            screenManager.goToGreatHall();
+        }
+        else if(Gdx.input.isKeyPressed(Input.Keys.NUM_2)) {
+            screenManager.close();
+        }
     }
 
     @Override

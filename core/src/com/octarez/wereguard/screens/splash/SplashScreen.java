@@ -1,54 +1,45 @@
 package com.octarez.wereguard.screens.splash;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.octarez.wereguard.WereguardCore;
+import com.octarez.wereguard.assets.FontCache;
+import com.octarez.wereguard.rendering.CenteredText;
 import com.octarez.wereguard.screens.BasicScreen;
-import com.octarez.wereguard.screens.ScreenManager;
 
 public class SplashScreen extends BasicScreen {
 
     private static long SPLASH_MINIMUM_MILLIS = 2000L;
 
-    private final ScreenManager screenManager;
-
-    private boolean loadingDone;
+    private AssetLoadingTask assetLoadingTask;
+    private CenteredText loadingText;
     private long millisPassed;
-
-    public SplashScreen(ScreenManager screenManager) {
-        this.screenManager = screenManager;
-    }
 
     @Override
     protected void initialize() {
-        loadingDone = false;
+        assetLoadingTask = new AssetLoadingTask(assetManager);
         millisPassed = 0;
-
-        startAsyncLoadingAssets();
-    }
-
-    private void startAsyncLoadingAssets() {
-        Gdx.app.postRunnable(new AssetLoadingTask(this));
     }
 
     @Override
     public void render(float deltaInSeconds, SpriteBatch spriteBatch) {
+        assetLoadingTask.loadAsset();
+
+        if (assetManager.hasLoaded(FontCache.NORSE_BOLD)) {
+            if (loadingText == null) {
+                loadingText = new CenteredText(FontCache.getNorseBold(assetManager), VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2, "Loading...");
+            }
+            loadingText.draw(spriteBatch);
+        }
+
         update(deltaInSeconds);
     }
 
-    private void update(float deltaInSeconds) {
+    @Override
+    protected void update(float deltaInSeconds) {
         millisPassed += deltaInSeconds * 1000f;
 
-        if(loadingDone && millisPassed > SPLASH_MINIMUM_MILLIS) {
-            screenManager.goToMainMenu();
+        if (assetLoadingTask.loadingDone && millisPassed > SPLASH_MINIMUM_MILLIS) {
+            WereguardCore.SCREEN_MANAGER.goToMainMenu();
         }
-    }
-
-    public void loadingDone() {
-        loadingDone = true;
-    }
-
-    @Override
-    public void dispose() {
-
     }
 }

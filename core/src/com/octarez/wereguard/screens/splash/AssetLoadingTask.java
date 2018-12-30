@@ -1,23 +1,20 @@
 package com.octarez.wereguard.screens.splash;
 
-import com.octarez.wereguard.assets.AudioManager;
-import com.octarez.wereguard.assets.FontManager;
-import com.octarez.wereguard.assets.ImageManager;
+import com.octarez.wereguard.assets.CustomizedAssetManager;
 
-public class AssetLoadingTask implements Runnable {
+public class AssetLoadingTask {
 
-    private final SplashScreen splashScreen;
+    private final CustomizedAssetManager assetManager;
+    public boolean loadingDone;
 
-    public AssetLoadingTask(SplashScreen splashScreen) {
-        this.splashScreen = splashScreen;
+    public AssetLoadingTask(CustomizedAssetManager assetManager) {
+        this.assetManager = assetManager;
+        this.loadingDone = false;
     }
 
-    @Override
-    public void run() {
-        AudioManager.loadSounds();
-        ImageManager.loadImages();
-        FontManager.loadFonts();
+    public void loadAsset() {
+        assetManager.queueAssetsForLoadingIfNecessary();
 
-        splashScreen.loadingDone();
+        loadingDone = assetManager.update();
     }
 }

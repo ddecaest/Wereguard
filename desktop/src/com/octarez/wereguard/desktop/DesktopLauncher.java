@@ -3,7 +3,7 @@ package com.octarez.wereguard.desktop;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.octarez.wereguard.screens.ScreenManagerImpl;
+import com.octarez.wereguard.WereguardCore;
 
 public class DesktopLauncher {
 
@@ -12,7 +12,7 @@ public class DesktopLauncher {
     }
 
     private static ApplicationListener createApplicationListener() {
-        return new ScreenManagerImpl();
+        return new WereguardCore();
     }
 
     private static LwjglApplicationConfiguration createConfiguration() {
