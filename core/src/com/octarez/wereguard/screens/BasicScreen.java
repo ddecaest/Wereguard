@@ -14,6 +14,10 @@ import com.octarez.wereguard.assets.CustomizedAssetManager;
 
 public abstract class BasicScreen implements Screen {
 
+    private static final float BACKGROUND_GREEN = 0.85f;
+    private static final float BACKGROUND_BLUE = 0.91f;
+    private static final float BACKGROUND_RED = 0.85f;
+
     protected static final int VIRTUAL_WIDTH = 1600;
     protected static final int VIRTUAL_HEIGHT = 900;
 
@@ -44,14 +48,12 @@ public abstract class BasicScreen implements Screen {
     @Override
     public void render(float delta) {
         camera.update();
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(BACKGROUND_RED, BACKGROUND_GREEN, BACKGROUND_BLUE, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         spriteBatch.setProjectionMatrix(camera.combined);
-        spriteBatch.begin();
-        render(delta, spriteBatch);
-        spriteBatch.end();
 
+        render(delta, spriteBatch);
         update(delta);
     }
 

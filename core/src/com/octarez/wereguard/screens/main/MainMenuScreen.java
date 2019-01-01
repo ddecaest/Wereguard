@@ -23,7 +23,9 @@ public class MainMenuScreen extends BasicScreen {
 
     @Override
     public void render(float deltaInSeconds, final SpriteBatch spriteBatch) {
+        spriteBatch.begin();
         menuOptions.forEach(menuOption -> menuOption.draw(spriteBatch));
+        spriteBatch.end();
     }
 
     @Override

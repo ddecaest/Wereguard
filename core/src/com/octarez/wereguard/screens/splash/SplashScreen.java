@@ -28,7 +28,9 @@ public class SplashScreen extends BasicScreen {
             if (loadingText == null) {
                 loadingText = new CenteredText(FontCache.getNorseBold(assetManager), VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2, "Loading...");
             }
+            spriteBatch.begin();
             loadingText.draw(spriteBatch);
+            spriteBatch.end();
         }
 
         update(deltaInSeconds);

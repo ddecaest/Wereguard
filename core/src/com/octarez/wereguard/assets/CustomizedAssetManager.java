@@ -38,7 +38,7 @@ public class CustomizedAssetManager {
 
         final FreeTypeFontLoaderParameter norseBoldParams = new FreeTypeFontLoaderParameter();
         norseBoldParams.fontFileName = FontCache.NORSE_BOLD;
-        norseBoldParams.fontParameters.color = Color.GRAY;
+        norseBoldParams.fontParameters.color = Color.BLACK;
         norseBoldParams.fontParameters.size = 32;
         assetManager.load(norseBoldParams.fontFileName, BitmapFont.class, norseBoldParams);
 
