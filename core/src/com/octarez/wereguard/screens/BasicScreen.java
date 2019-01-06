@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.octarez.wereguard.WereguardCore;
+import com.octarez.wereguard.WereguardState;
 import com.octarez.wereguard.assets.CustomizedAssetManager;
 
 public abstract class BasicScreen implements Screen {
@@ -18,8 +19,8 @@ public abstract class BasicScreen implements Screen {
     private static final float BACKGROUND_BLUE = 0.91f;
     private static final float BACKGROUND_RED = 0.85f;
 
-    protected static final int VIRTUAL_WIDTH = 1600;
-    protected static final int VIRTUAL_HEIGHT = 900;
+    public static final int VIRTUAL_WIDTH = 1600;
+    public static final int VIRTUAL_HEIGHT = 900;
 
     protected CustomizedAssetManager assetManager;
     protected ShapeRenderer shapeRenderer;
